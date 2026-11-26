@@ -16,10 +16,41 @@
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #f9fafb;
+      background-color: #fdf3e8;
       color: #111827;
       margin: 0;
       padding: 0;
+    }
+
+     /* 배경 장식 (반짝이 + 점무늬) */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-repeat: no-repeat;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1C13 8 16 11 23 12C16 13 13 16 12 23C11 16 8 13 1 12C8 11 11 8 12 1Z' fill='none' stroke='%23a9c4e4' stroke-width='1.2'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1C13 8 16 11 23 12C16 13 13 16 12 23C11 16 8 13 1 12C8 11 11 8 12 1Z' fill='none' stroke='%23f0b48a' stroke-width='1.2'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1C13 8 16 11 23 12C16 13 13 16 12 23C11 16 8 13 1 12C8 11 11 8 12 1Z' fill='none' stroke='%23a9c5a0' stroke-width='1.2'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 1C13 8 16 11 23 12C16 13 13 16 12 23C11 16 8 13 1 12C8 11 11 8 12 1Z' fill='none' stroke='%23f0b48a' stroke-width='1.2'/%3E%3C/svg%3E");
+      background-size: 26px 26px, 15px 15px, 22px 22px, 14px 14px;
+      background-position: 5% 55%, 9% 58%, 92% 90%, 95% 93%;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      left: 0;
+      bottom: 8%;
+      width: 120px;
+      height: 130px;
+      z-index: -1;
+      pointer-events: none;
+      background-image: radial-gradient(circle, #e6d5ca 2px, transparent 2.5px);
+      background-size: 16px 16px;
+      -webkit-mask-image: radial-gradient(circle at 0% 50%, #000 15%, transparent 75%);
+      mask-image: radial-gradient(circle at 0% 50%, #000 15%, transparent 75%);
     }
 
     /* 메인 목록 페이지 */
@@ -36,7 +67,7 @@
       justify-content: space-between;
       padding-bottom: 12px;
       margin-bottom: 12px;
-      border-bottom: 1px solid #f3f4f6;
+      border-bottom: 2px dashed #f0d5ca;
       font-size: 12px;
       color: #6b7280;
     }
@@ -73,7 +104,7 @@
       align-items: center;
       gap: 6px;
       padding-bottom: 12px;
-      border-bottom: 1px solid #e5e7eb;
+      border-bottom: 2px dashed #f0d5ca;
       margin-bottom: 16px;
     }
 
@@ -83,7 +114,7 @@
       display: flex;
       align-items: center;
       background: #fff;
-      border: 1px solid #d1d5db;
+      border: 1px solid #e8cfc4;
       border-radius: 20px;
       padding: 6px 10px;
       min-height: 38px;
@@ -140,7 +171,7 @@
     }
 
     .btn-new {
-      background: #111;
+      background: #f4a58f;
       color: #fff;
       border: none;
       padding: 0 14px;
@@ -169,8 +200,8 @@
       background: #fff;
       border-radius: 12px;
       overflow: hidden;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border: 1.5px solid #e6d3cb;
+      box-shadow: 0 4px 10px rgba(232, 140, 115, 0.4);
       display: flex;
       flex-direction: column;
       cursor: pointer;
@@ -181,6 +212,7 @@
       width: 100%;
       aspect-ratio: 1 / 1;
       background: #f3f4f6;
+      border-bottom: 1px solid #d1d5db;
       overflow: hidden;
     }
 
@@ -259,7 +291,7 @@
     #editor-page {
       display: none;
       min-height: 100vh;
-      background: #ffffff;
+      background: #fdf3e8;
       flex-direction: column;
     }
     #editor-page.active {
@@ -287,7 +319,7 @@
       max-width: 600px;
       width: 100%;
       margin: 0 auto;
-      background: #ffffff;
+      background: transparent;
       border-bottom: 1px solid #f3f4f6;
     }
     .editor-nav-right {
@@ -404,6 +436,8 @@
     }
 
     .editor-body {
+      background: #ffffff;
+      border-radius: 0 0 16px 16px;
       max-width: 600px;
       width: 100%;
       margin: 0 auto;
@@ -695,6 +729,17 @@
     let currentTotalBytes = 0;
 
     // [테스터 특전용 숨김 코드 - 정식 출시 때 이 블록만 삭제하면 됨]
+     const TESTER_MSG = {
+      ko: {
+        unlocked: '🎉 테스터 특전: PRO 무제한 모드가 활성화되었습니다!',
+        notice: '🎁 테스터 특전 안내\n\n상단의 용량 표시를 5번 연속 누르면 PRO 무제한 모드가 켜집니다.'
+      },
+      en: {
+        unlocked: '🎉 Tester perk: PRO Unlimited mode is now active!',
+        notice: '🎁 Tester Perk\n\nTap the storage indicator at the top 5 times in a row to unlock PRO Unlimited mode.'
+      }
+    };
+
     let secretTapCount = 0;
     let secretTapTimer = null;
     window.addEventListener('DOMContentLoaded', () => {
@@ -710,10 +755,18 @@
             isProUnlocked = true;
             localStorage.setItem('diary_pro_unlocked', 'true');
             calculateUsageAndUpdateUI();
-            alert('🎉 테스터 특전: PRO 무제한 모드가 활성화되었습니다!');
+            alert((TESTER_MSG[currentLang] || TESTER_MSG.en).unlocked);
           }
         });
       }
+    });    
+         // [테스터 공지 - 정식 출시 때 삭제]
+    window.addEventListener('DOMContentLoaded', () => {
+      if (isProUnlocked || localStorage.getItem('tester_notice_seen')) return;
+      localStorage.setItem('tester_notice_seen', 'true');
+      setTimeout(() => {
+        alert((TESTER_MSG[currentLang] || TESTER_MSG.en).notice);
+      }, 500);
     });
 
     function openLocalDB() {
