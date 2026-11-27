@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.eden_oh.twa",
+      "sha256_cert_fingerprints":
+        ["22:35:60:D0:50:38:7D:BA:D2:7B:C8:50:23:0E:FD:96:A6:43:5C:E7:B5:F0:AA:84:D0:6C:DA:24:2E:7D:3B:7E"]
+    }
+  }
+]
